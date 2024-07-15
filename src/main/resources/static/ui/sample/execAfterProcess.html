@@ -1,0 +1,23 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function() {
+        var parm = {
+             serviceId              : "ApprovalService.approvalAfterProcess"
+            ,requestParm            : {APPROVAL_ID : '18ed0ecf561f2d03'}
+        }
+        C_COM.requestService(parm, function(resultData) {
+			dalert(resultData);
+        });
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+<div class="cont_wrap">
+	Sevice를 호출 했습니다.
+</div>

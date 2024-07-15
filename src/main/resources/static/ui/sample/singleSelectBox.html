@@ -1,0 +1,82 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+		getSelectBoxData : function() {
+			
+			var selectBoxVal = C_UICOM.getData("selectBoxId");
+			
+		 }
+		,setSelectBoxData : function() {
+			debugger;
+			C_UICOM.setSingleBox("selectBoxId", "FA");
+		 }
+
+		,getSelectBoxPopup : function() {
+			C_POP.open('sample_popup_selectBoxPopup', {}, function(retData) {
+				dalert(retData);
+			});
+		 }
+		,setDisabled : function(state) {
+			C_UICOM.setSelectBoxOption("selectBoxId", "readOnly", state);
+		}
+	
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function() {
+		
+		
+		// Code List 읽어오기
+		var userRoleList = C_COM.getCodeList("GRADE");
+		dalert(userRoleList);
+		var singleboxList = { 
+			 defaultItem 	: ["111", "선택"]
+			,data 			: userRoleList
+		 	,targetId 		: "selectBoxId"
+//		 	,readOnly		: "Y"
+		}
+		C_UICOM.makeSelectBox(singleboxList, "single");
+		
+		// 코드 Attr 읽어오기		
+		var codeAttrList = C_COM.getCodeAttr("USER_ROLE", "MANAGER");
+		
+		C_UICOM.addChangeListener("selectBoxId", function(dataObj) {
+			dalert(dataObj);
+		});
+		
+		
+		
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+<div class="cont_wrap">
+	Single Select Box Sample <br/><br/>
+	
+	
+	<div id="selectBoxId" style="width:200px"></div>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<input type=button value="읽기" onclick="<@pageId>.getSelectBoxData()"/>
+	<br/>	
+	<br/>	
+	<input type=button value="값세팅" onclick="<@pageId>.setSelectBoxData()"/>
+	<br/>	
+	<br/>	
+	<input type=button value="disabled" onclick="<@pageId>.setDisabled('Y')"/>
+	<br/>	
+	<br/>	
+	<input type=button value="disabled 해제" onclick="<@pageId>.setDisabled('N')"/>
+	<br/>	
+	<br/>	
+	<br/>	
+	<br/>	
+	<input type=button value="popup" onclick="<@pageId>.getSelectBoxPopup()"/>
+		
+	
+	
+	
+
+</div>

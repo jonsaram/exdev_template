@@ -1,0 +1,76 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+		init : function() {
+			
+			var parm = {
+				 queryId 		: "Filemng.getGrpFileList"
+				,requestParm	: {GRP_FILE_ID : "122345"}
+			}
+			C_COM.requestQuery(parm, function(resultData) {
+				debugger;
+				let fileInfo = resultData.data[0];
+				if(isValid(fileInfo)) {
+					var fileId = fileInfo.FILE_ID;
+					$("#viewFile").attr("src", "/filedownload.do?FILE_ID=" + fileId);
+				}
+			});
+		 }
+		,changeGrpFileId : function() {
+			let parm = {
+				 nowKey 	: { GRP_FILE_ID : 'ㄱㄷㄷ', OWNER_CD : "USER_FACE"}
+				,targetKey	: { GRP_FILE_ID : 'newId'}
+			}
+			<@pageId>.importFilemng.changeGrpFileId(parm, function(resultState) {
+				if(resultState == "S") {
+					// 성공
+					alert('성공');
+				} else {
+					// 실패
+					alert('실패');
+				}
+			});
+		 }
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function(parm) {
+		var parm = {
+			 GRP_FILE_ID 	: "122345"
+			,OWNER_CD 		: "USER_FACE"
+			,allowExt		: ["jpg", "jpeg", "png", "gif", "bmp"]
+			,hide			: "Y"
+		}
+		C_COMP.import("importFilemng", "component_compFilemng",parm , function(fileId) {
+			
+			$("#viewFile").attr("src", "/filedownload.do?FILE_ID=" + fileId);
+			
+		});
+		
+		
+		<@pageId>.init();
+		
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+<div class="cont_wrap">
+
+	importFilemng Sample <br/><br/>
+	
+	<div id="importFilemng">
+
+	</div>
+	
+	<div> 업로드 파일 보기</div>
+	
+	<div>
+		<img id="viewFile"/>
+	</div>
+
+	<div>
+		<a href="javascript:<@pageId>.changeGrpFileId()">파일 GRP ID 변경</a>
+	</div>
+	
+</div>

@@ -1,0 +1,281 @@
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<style>
+    #board_list > tbody > tr {
+        cursor: pointer;
+    }
+</style>
+<script type="text/javascript">
+	var <@pageId> = {
+		 fileNo : 0
+		,filesArr : []
+		,uploadMultiFile : function () {
+
+		    var groupId = $("#<@pageId> #groupId").val();
+		    
+		    if (groupId.length < 1) {
+		        alert("파일그룹 ID를 입력해 주세요.");
+		        $("#groupId").focus();
+		        return false;
+		    }
+		    
+		    // 폼데이터 담기
+		    var form = document.querySelector("#<@pageId> form");
+		    
+		    var formData = new FormData(form);
+		    
+		    for (var i = 0; i < <@pageId>.filesArr.length; i++) {
+		        // 삭제되지 않은 파일만 폼데이터에 담기
+		        if (!<@pageId>.filesArr[i].is_delete) {
+		            formData.append("attach_file", <@pageId>.filesArr[i]);
+		            formData.append("uuids", C_COM.makeUniqueId());
+		        }
+		    }
+
+		    $.ajax({
+		    	url: '/multiFileUpload.do',
+		        method: 'POST',
+		        data: formData,
+		        contentType: false,
+		        processData: false,
+		        success: function (response) {
+		        	const msg = response.msg;
+		            alert(msg);
+		        },
+		        error: function (xhr, desc, err) {
+		            alert('에러가 발생 하였습니다.');
+		            return;
+		        }
+		    })
+	
+		 }
+		/* 첨부파일 추가 */
+		,addFile : function(obj){
+		    var maxFileCnt = 5;   // 첨부파일 최대 개수
+		    var attFileCnt = document.querySelectorAll('.filebox').length;    // 기존 추가된 첨부파일 개수
+		    var remainFileCnt = maxFileCnt - attFileCnt;    // 추가로 첨부가능한 개수
+		    var curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
+
+		    // 첨부파일 개수 확인
+		    if (curFileCnt > remainFileCnt) {
+		        alert("첨부파일은 최대 " + maxFileCnt + "개 까지 첨부 가능합니다.");
+		    }
+
+		    for (var i = 0; i < Math.min(curFileCnt, remainFileCnt); i++) {
+
+		        const file = obj.files[i];
+
+		        // 첨부파일 검증
+		        if (<@pageId>.validation(file)) {
+		            // 파일 배열에 담기
+		            var reader = new FileReader();
+		            reader.onload = function () {
+		            	<@pageId>.filesArr.push(file);
+		            };
+		            reader.readAsDataURL(file)
+
+		            // 목록 추가
+		            let htmlData = '';
+		            htmlData += '<div id="file' + <@pageId>.fileNo + '" class="filebox">';
+		            htmlData += '   <p class="name">' + file.name + '</p>';
+		            htmlData += '   <button onclick="<@pageId>.deleteFile(' + <@pageId>.fileNo + ');">삭제</button>';
+		            htmlData += '</div>';
+		            $('#<@pageId> .file-list').append(htmlData);
+		            <@pageId>.fileNo++;
+		        } else {
+		            continue;
+		        }
+		    }
+		    // 초기화
+		    //document.querySelector("input[type=file]").value = "";
+		    $("#<@pageId> input[type=file]").val("");
+		 }
+		/* 첨부파일 검증 */
+		,validation : function(obj){
+		    const fileTypes = ['application/pdf', 'image/gif', 'image/jpeg', 'image/png', 'image/bmp', 'image/tif', 'application/haansofthwp', 'application/x-hwp'];
+		    if (obj.name.length > 100) {
+		        alert("파일명이 100자 이상인 파일은 제외되었습니다.");
+		        return false;
+		    } else if (obj.size > (100 * 1024 * 1024)) {
+		        alert("최대 파일 용량인 100MB를 초과한 파일은 제외되었습니다.");
+		        return false;
+		    } else if (obj.name.lastIndexOf('.') == -1) {
+		        alert("확장자가 없는 파일은 제외되었습니다.");
+		        return false;
+		    } else if (!fileTypes.includes(obj.type)) {
+		        alert("첨부가 불가능한 파일은 제외되었습니다.");
+		        return false;
+		    } else {
+		        return true;
+		    }
+		 }
+		/* 첨부파일 삭제 */
+		,deleteFile : function(num) {
+		    $("#<@pageId> #file" + num).remove();
+		    <@pageId>.filesArr[num].is_delete = true;
+		 }
+	}
+	// Page Load가 완료된후 실행 된다.s
+	C_PM.onLoadPage("<@pageId>", function(parm) {
+		//alert 창띄우기
+		//dalert(parm);
+		//const id = crypto.randomUUID();
+        //console.log(id); // "cbfc904b-b898-4deb-b736-ba433489904c"
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+	
+</script>
+<!-- 게시글 리스트 -->
+<div class="container" style="margin-top:100px">
+    <div class="card shadow">
+        <div class="card-body">
+            <h4 class="card-title">게시판 이름</h4>
+            <table class="table table-hover" id='board_list'>
+                <thead>
+                    <tr>
+                        <th class="text-center d-none d-md-table-cell">글번호</th>
+                        <th class="w-50">제목</th>
+                        <th class="text-center d-none d-md-table-cell">작성자</th>
+                        <th class="text-center d-none d-md-table-cell">작성날짜</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center d-none d-md-table-cell">10</td>
+                        <td>글 제목 입니다</td>
+                        <td class="text-center d-none d-md-table-cell">홍길동</td>
+                        <td class="text-center d-none d-md-table-cell">2018-12-12</td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="text-center d-none d-md-table-cell">10</td>
+                        <td>글 제목 입니다</td>
+                        <td class="text-center d-none d-md-table-cell">홍길동</td>
+                        <td class="text-center d-none d-md-table-cell">2018-12-12</td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="text-center d-none d-md-table-cell">10</td>
+                        <td>글 제목 입니다</td>
+                        <td class="text-center d-none d-md-table-cell">홍길동</td>
+                        <td class="text-center d-none d-md-table-cell">2018-12-12</td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="text-center d-none d-md-table-cell">10</td>
+                        <td>글 제목 입니다</td>
+                        <td class="text-center d-none d-md-table-cell">홍길동</td>
+                        <td class="text-center d-none d-md-table-cell">2018-12-12</td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="text-center d-none d-md-table-cell">10</td>
+                        <td>글 제목 입니다</td>
+                        <td class="text-center d-none d-md-table-cell">홍길동</td>
+                        <td class="text-center d-none d-md-table-cell">2018-12-12</td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="text-center d-none d-md-table-cell">10</td>
+                        <td>글 제목 입니다</td>
+                        <td class="text-center d-none d-md-table-cell">홍길동</td>
+                        <td class="text-center d-none d-md-table-cell">2018-12-12</td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="text-center d-none d-md-table-cell">10</td>
+                        <td>글 제목 입니다</td>
+                        <td class="text-center d-none d-md-table-cell">홍길동</td>
+                        <td class="text-center d-none d-md-table-cell">2018-12-12</td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="text-center d-none d-md-table-cell">10</td>
+                        <td>글 제목 입니다</td>
+                        <td class="text-center d-none d-md-table-cell">홍길동</td>
+                        <td class="text-center d-none d-md-table-cell">2018-12-12</td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="text-center d-none d-md-table-cell">10</td>
+                        <td>글 제목 입니다</td>
+                        <td class="text-center d-none d-md-table-cell">홍길동</td>
+                        <td class="text-center d-none d-md-table-cell">2018-12-12</td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="text-center d-none d-md-table-cell">10</td>
+                        <td>글 제목 입니다</td>
+                        <td class="text-center d-none d-md-table-cell">홍길동</td>
+                        <td class="text-center d-none d-md-table-cell">2018-12-12</td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="d-none d-md-block">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a href="#" class="page-link">이전</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">4</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">5</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">6</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">7</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">8</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">9</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">10</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">다음</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="d-block d-md-none">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a href="#" class="page-link">이전</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">다음</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="text-right">
+                <a href="board_write.html" class="btn btn-primary">글쓰기</a>
+            </div>
+            
+        </div>
+    </div>
+</div>
+

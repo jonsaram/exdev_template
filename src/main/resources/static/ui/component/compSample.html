@@ -1,0 +1,25 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@compId> = {
+		 returnFn : function() {
+			C_COMP.callback("<@compId>", {BB:22});
+		 }
+		,testFn : function() {
+			alert("test입니다.");
+		 }
+	}
+	// Component Load가 완료된후 실행 된다.
+	C_COMP.onLoadComp("<@compId>", function(data) {
+		alert("onload");
+		
+		dalert(data);
+		
+	});
+</script>
+<comp>
+	Component입니다.<@AA> <br/><br/>
+	
+	<input type=button value=callback onclick="<@compId>.returnFn()"> <br/><br/>
+
+	<input type=button value=상위호출 onclick="<@parentId>.callFromComp()"> <br/><br/>
+</comp>

@@ -1,0 +1,50 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+			
+		callCompSetContent : function() {
+	        <@pageId>.textEditorComp.setContent("aaa");
+	    }
+        ,callCompSetMode : function() {
+            
+            let parm = {mode:"R"}
+            <@pageId>.textEditorComp.setMode(parm);
+        }
+        ,callCompGetContent : function() {
+            
+        	var content = <@pageId>.textEditorComp.getContent();
+            alert(content);
+         }
+         
+        
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function() {
+        C_COMP.import("textEditorComp", "component_compTextEditor", {content:"text sample"}, function(data) {
+        
+        });
+
+        C_COMP.import("textEditorComp2", "component_compTextEditor", {content:"text sample"}, function(data) {
+
+        });
+		
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+<div class="cont_wrap">
+
+	TextEditor Sample <br/><br/>
+	
+	<div id="textEditorComp"></div>
+	<br/>
+	<div id="textEditorComp2"></div>
+	
+	
+    <button type="button" class="btn close"  onclick="<@pageId>.callCompSetContent()" >callCompFn</button>
+    <button type="button" class="btn close"  onclick="<@pageId>.callCompSetMode()"    >callCompSetMode</button>
+    <button type="button" class="btn close"  onclick="<@pageId>.callCompGetContent()" >callCompGetContent</button>
+    
+</div>

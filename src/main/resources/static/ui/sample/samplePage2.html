@@ -1,0 +1,202 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+		render : function() {
+			var rparm = {
+				 targetId 		: "tableDomId"
+				,list			: []
+			}
+			C_COM.renderHtml("<@pageId>", rparm);
+		}
+		,afterProcess : function() {
+			var parm = {
+				 serviceId 				: "ProjectService.approvalAfterProcessAboutIssue"
+				,requestParm			: {pjt_id : "XXXX"}
+			}
+			
+			C_COM.requestService(parm, function(resultData) {
+				dalert(resultData);
+			});
+		 }
+		,callQuery : function() {
+			var parm = {
+				 queryId 		: "Common.getDebug"
+				,requestParm	: {sql : "SELECT CONTENT FROM VIST_ESB_MAIL_MASTER WHERE EMAIL_NO = '20210108171008176E10BAF051F2BF2D'"}
+			}
+			C_COM.requestQuery(parm, function(resultData) {
+				dwrite(resultData.data[0].CONTENT);
+			});
+		 }
+		,mailTest : function() {
+
+			var parm = {
+				 serviceId 				: "EmailService.sendHtmlEmail"
+				,requestParm			: {
+											recipient:$("#recipient").val(),
+											subject:$("#subject").val(),
+											templateName:$("#templateName").val(),
+											cxt_name1:$("#cxt_name1").val(),
+											cxt_name2:$("#cxt_name2").val()
+										   }
+			}
+			
+			C_COM.requestService(parm, function(resultData) {
+
+				$("#mailResult").text(resultData.data.data.htmlBody);
+			});
+		 }
+		,chartUrl : function() {
+			var parm = {
+				 serviceId 				: "SampleService.getSample2"
+				,requestParm			: {pjt_id : "XXXX"}
+			}
+			
+			C_COM.requestService(parm, function(resultData) {
+				dalert(resultData);
+			});
+		 }
+		,uploadExcel : function () {
+
+			var fileInput = $('#excelFileInput')[0];
+		    var file = fileInput.files[0];
+
+		    var formData = new FormData();
+		    formData.append('file', file);
+
+		    $.ajax({
+		        url: '/excelUpload.do',
+		        type: 'POST',
+		        data: formData,
+		        contentType: false,
+		        processData: false,
+		        success: function(response) {
+
+		        	const jsonData  = JSON.parse(response.data);
+
+		            const tableContainer = document.getElementById('result');
+		            tableContainer.style.position = "relative";
+		            const table = document.createElement('table');
+					table.style.marginLeft 		= "200px";
+					table.style.borderCollapse 	= "collapse";
+					table.style.width 			= "50%";
+					
+		            const columns = [];
+					
+		            // Thead
+		            const thead = document.createElement('thead');
+		            
+		            thead.style.border 		= "1px solid #dddddd";
+		            thead.style.textAlign 	= "center";
+		            thead.style.padding 	= "8px";
+		            thead.style.backgroundColor = "#f2f2f2";
+		            thead.style.height 		= "40px";
+
+		            const theadRow = document.createElement('tr');
+		            for (const key in jsonData[0]) {
+		                if (Object.hasOwnProperty.call(jsonData[0], key)) {
+		                    const th = document.createElement('th');
+		                    th.style.border = "1px solid #dddddd";
+		                    th.textContent = key;
+		                    theadRow.appendChild(th);
+		                    columns.push( key );
+		                }
+		            }
+		            thead.appendChild(theadRow);
+		            table.appendChild(thead);
+
+		            // Tbody
+		            const tbody = document.createElement('tbody');
+		            
+		            for (const item of jsonData) {
+		            	
+		                const tbodyRow = document.createElement('tr');
+		                
+		                for (const column of columns) {
+		                    const td = document.createElement('td');
+		                    td.style.textAlign 	= "right";
+		                    td.style.padding 	= "8px";
+		                    td.style.border 	= "1px solid #dddddd";
+		                    td.textContent = item[column] || '';
+		                    tbodyRow.appendChild(td);
+		                }
+
+		                tbody.appendChild(tbodyRow);
+		            }
+		            
+		            table.appendChild(tbody);
+
+		            tableContainer.appendChild( table);
+		        	
+		        },
+		        error: function(error) {
+		        	 $("#result").html ( '업로드 실패' );
+		        }
+		    });			
+		}		
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function() {
+		//alert(_WEB_ROOT_URL);		
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+
+<div class="cont_wrap">
+	<!--section -->
+	<section id="bd">
+	<div id="h2i" canvasItem=Y>
+	<@pageId> 페이지입니다1.(s2)<br/><br/>
+	
+	<br/><br/> <a href="javascript:<@pageId>.afterProcess()">과제 후처리</a>
+
+	<br/><br/> <a href="javascript:<@pageId>.callQuery()">Sql Debug</a>
+
+	
+	<br/><br/> <a href="javascript:<@pageId>.chartUrl()">chartUrl</a>
+	
+	<br/><br/> <a href="javascript:C_PM.movePage('sample_highchart')">chart sample</a>
+	
+	<br/><br/> <a href="javascript:C_PM.movePage('main_chat_chatList');">[TBL_EXP_CHAT] chat</a>
+	
+	<br/><br/>
+	<style>
+		.form-container { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; width:250px; border:1px solid black; padding:5px;}
+	    .form-container label {flex: 0 0 30%;text-align: right;padding-right: 10px;}
+	    .form-container input[type="text"] {flex: 0 0 65%;}
+	    .form-container a {width: 100%;text-align: center;font-size: 16px;display: block;margin-top: 10px;}
+	</style>	 
+	<div style='width:250px; height:30px; border:1px solid black;padding-left:5px;padding-top:5px;'>메일 전송 테스트</div>
+	<div class='form-container'>
+	    <label for="recipient">수신자   :</label>		<input type='text'	id="recipient"		value="trigger7@naver.com"/>
+	    <label for="subject">메일제목:</label>		<input type='text'  id="subject"		value="hello Explan"/>
+	    <label for="templateName">템플릿명:</label> <input type='text'	id="templateName" 	value="welcome-email"/>
+	    <label for="cxt_name1">변수1:</label>		<input type='text'	id="cxt_name1" 		value="라이더"/>
+	    <label for="cxt_name2">변수2:</label>		<input type='text'	id="cxt_name2" 		value="트리거"/>
+	    <a style="width: 100%;font-size: 16px;border: 1px solid black; background-color: #f2f2f2;" href="javascript:<@pageId>.mailTest()">Mail Send</a>
+	</div>
+	<div id="mailResult" style='width:50%;overflow:auto'/></div>
+	<br/><br/>
+			
+		
+	<br/><br/>	<div style="border:1px solid black; height:40px; display: inline-block;">
+					<input type="file" id="excelFileInput" style="padding-left:5px; padding-top:5px; border:1px solid black; height: 100%; width: calc(100% - 200px); float: left;"/>
+				   	<button id="uploadButton" onclick="<@pageId>.uploadExcel()" style="padding: 10px 20px; border-radius: 5px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); transition: background-color 0.3s ease; border: 1px solid black; background-color: #f2f2f2; height: 100%; width: 200px; float: right;">Upload sample</button>
+				</div>
+				<div id="result"/></div>
+				<script>
+					const uploadButton = document.getElementById('uploadButton');
+					
+					uploadButton.addEventListener('mouseenter', function() {
+					    uploadButton.style.backgroundColor = '#e0e0e0';
+					});
+					
+					uploadButton.addEventListener('mouseleave', function() {
+					    uploadButton.style.backgroundColor = '#f2f2f2';
+					});
+				</script>
+	</section>
+	<!--//section -->
+</div>

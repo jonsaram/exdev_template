@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Start Asset</title>
+	
+	<!--  Common CSS Lib -->
+	<link rel="stylesheet" type="text/css" href="./css/libs/jquery-ui.css"		/>
+	
+	
+	<!-- Project Css Lib -->
+	<!-- <link rel="stylesheet" type="text/css" href="./css/common.css"		/> -->
+
+
+	<!--  Common JS Lib -->
+	<script type="text/javascript" src="./js/libs/jquery-1.12.4.min.js"			></script>
+	<script type="text/javascript" src="./js/libs/jquery-ui.js"					></script>
+ 	<script type="text/javascript" src="./js/libs/highcharts.js"				></script>
+	<script type="text/javascript" src="./js/libs/highcharts-more.js"			></script>
+	<script type="text/javascript" src="./js/libs/highcharts-treemap.js"		></script>
+	<script type="text/javascript" src="./js/libs/highcharts-heatmap.js"		></script>
+	<script type="text/javascript" src="./js/libs/highcharts-accessibility.js"	></script>
+	<script type="text/javascript" src="./js/libs/index.global.js"				></script>
+	<script type="text/javascript" 	src="./ui/js/lib/jsrender.js"				></script>
+
+	<!--  Project JS Lib -->
+	<script type="text/javascript" 	src="./ui/js/common/config.js"				></script>
+	<script type="text/javascript" 	src="./ui/js/common/function_ajax.js"		></script>
+	<script type="text/javascript" 	src="./ui/js/common/function_common.js"		></script>
+	<script type="text/javascript" 	src="./ui/js/common/project_common.js"		></script>
+
+	<script type="text/javascript">
+		// Session설정
+/*		
+		var sendParm = {
+			 targetUrl 	: _WEB_ROOT_URL + "/getSession.do"
+			,data		: {}
+		}
+		
+		let userInfo = ajaxRequest(sendParm);
+
+		if(isEmpty(userInfo)) {
+			C_POP.alert('Session정보가 없습니다. 로그인을 해주세요.');
+			C_COM.sessionConfirmCheck = "Y";
+			location.href="/";
+			
+		} else {
+
+		}
+*/
+		$(function() {
+			C_PM.movePage("sample_index");		
+		});
+		
+		
+	</script>
+
+</head>
+<body class="main">
+	<headerblock id="header">
+	</header>
+		
+	<bodyblock id="bodyBlock">
+	</bodyblock>
+
+
+	<footerblock id="footerBlock">
+	</footerblock>
+
+		<!--  각종 Template 111 -->
+		
+		<!--  
+			Multibox Template
+		-->
+	
+</body>
+</html>

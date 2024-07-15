@@ -1,0 +1,73 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+			
+		handleKeyPress : (event, gubun) => {
+		
+		    if (event.key === 'Enter') {
+		    	
+		    	const value = event.target.value;
+				
+		    	/*	
+		    		autoRtn: true : 조회된 memeber가 1개일때 팝업 없이 조회. , 1개 이상일때, 팝업 조회.
+					gubun : 구분값이 없을 때 TBL_EXP_USER member조회 / BUYER 일때 TB_EXP_BUYER member조회
+					searchText : 조회할 데이터
+		    	*/
+		    	_memberSearchPopup( {autoRtn:true, gubun:gubun, searchText:value } , (retData)=>{
+
+		              if( !isEmpty( retData["BUYER_ID"])){
+		            	  
+			              $("#<@pageId>_BUYER").val(retData["BUYER_NM"]+ " ("+retData["BUYER_ID"]+")");
+		              }
+		              
+		              if( !isEmpty( retData["USER_ID"])){
+		            	  
+			              $("#<@pageId>_USER").val(retData["USER_NM"]+ " ("+retData["USER_ID"]+")");
+		              }  
+		              
+		    	})
+		    }
+		}
+	
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function() {
+		
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+<div class="cont_wrap">
+	Select Member Sample <br/><br/>
+	
+	<ul>	
+		<li class="w100">
+			<label>TBL_EXP_BUYER member 선택 ( FOR TEST :: '대부' 입력 후 엔터 , 'ID_2' 입력 후 엔터)</label>
+			<div class="info">
+				<div class="search_inputWrap" style="width:300px;">
+					<input type="search" id="<@pageId>_BUYER" placeholder="고객명(고객번호)" onkeypress="<@pageId>.handleKeyPress(event,'BUYER')">
+					<a href="javascript:void(0);" class="search_btn"><i class="icon_search"></i></a>
+				</div>
+			</div>
+		</li>
+		<li class="w100 ml0">
+			<label>=======================================================</label>
+			<div class="info">
+				<div class="search_inputWrap" style="width:300px;">
+				</div>
+			</div>
+		</li>	
+		<li class="w100 ml0">
+			<label>TBL_EXP_BUYER member 선택 ( FOR TEST :: '응규' 입력 엔터 , 'dride' 입력 후 엔터)</label>
+			<div class="info">
+				<div class="search_inputWrap" style="width:300px;">
+					<input type="search" id="<@pageId>_USER" placeholder="사원이름(사원ID)" onkeypress="<@pageId>.handleKeyPress(event)">
+					<a  href="javascript:void(0);" class="search_btn"><i class="icon_search"></i></a>
+				</div>
+			</div>
+		</li>
+	</ul>
+
+</div>

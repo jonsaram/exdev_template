@@ -1,0 +1,73 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function() {
+
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+<div class="cont_wrap">
+	<div class="cont_top">
+		<h2><i class="icon_bullet"></i>컨설팅 상품 관리</h2>
+	</div>
+
+	<section class="sec_wrap list" style="height:calc(100% - 43px);">
+		<!-- tap area -->
+		<div class="tab_wrap">
+			<ul>
+				<li class="active"><a id="#tab11">월자문 컨설팅</a></li>
+				<li><a id="#tab22">일회성 컨설팅</a></li>
+				<li><a id="#tab33">코웍 외주자문 컨설팅</a></li>
+			</ul>
+			<a href="#modal-ex" class="btn select small add">추가</a>
+			<div class="tab_content">
+				<div id="tab11" class="display">
+					<ul class="listBtn">
+						<li>
+							<a href="#" class="btn active">월자문 1</a>
+						</li>
+						<li>
+							<a href="#" class="btn">월자문 2</a>
+						</li>
+						<li>
+							<a href="#" class="btn">월자문 3</a>
+						</li>
+						<li>
+							<a href="#" class="btn">월자문 4</a>
+						</li>
+						<li>
+							<a href="#" class="btn">월자문 5</a>
+						</li>
+						<li>
+							<a href="#" class="btn">월자문 6</a>
+						</li>
+						<li>
+							<a href="#" class="btn">월자문 7</a>
+						</li>
+						<li>
+							<a href="#" class="btn">월자문 8</a>
+						</li>
+						<li>
+							<a href="#" class="btn">월자문 9</a>
+						</li>
+						<li>
+							<a href="#" class="btn">월자문 10</a>
+						</li>
+					</ul>
+				</div>
+				<div id="tab22" class="display">
+
+				</div>
+				<div id="tab33" class="display">
+
+				</div>
+			</div>
+		</div>
+	</section>
+</div>

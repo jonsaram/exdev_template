@@ -1,0 +1,35 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@popupId> = {
+		 close : function(returnData) {
+			if(isEmpty(returnData)) returnData = {};
+			C_POP.close(returnData);
+		 }
+		,openPopup : function() {
+			C_POP.open('popup_samplePopup2', {}, function(retData) {
+				dalert(retData);
+			});
+		 }
+	
+	}
+	// Popup Load가 완료된후 실행 된다.
+	C_POP.onLoadPopup("<@popupId>", function(data) {
+		
+	});
+</script>
+<div class="modal_wrap">
+	<div class="modal"style="width:390px;height:190px;">
+		<div class="modal_header">
+			<button type="button" class="btn_close" onclick="<@popupId>.close()"><span class="sp">팝업 닫기</span></button>
+		</div>
+		<div class="modal_body">
+			<div class="alert_txt">
+				본문 내용
+			</div>
+		</div>
+		<div class="modal_footer">
+			<button type="button" class="btn" onclick="<@popupId>.openPopup()"	>확인</button>
+			<button type="button" class="btn" onclick="<@popupId>.close()"		>닫기</a></button>
+		</div>
+	</div>
+</div>

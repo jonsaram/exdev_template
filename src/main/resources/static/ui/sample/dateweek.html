@@ -1,0 +1,43 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+		
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function() {
+
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+
+<div class="conWrap">
+	<!--section -->
+	<section>
+		<table>
+			<tr>
+				<td>
+					<span class="date" style="background: #fff;">
+						<input type="text" id="typeA" name="typeA" defaultDate="today" readonly/>										
+					</span>
+				</td>
+			<tr>
+			<tr>
+				<td>
+					<span class="date" style="background: #fff;">
+						<input type="text" id="typeB" name="typeB" defaultDate="today" showWeek="Y" dateType="D" readonly/>										
+					</span>
+				</td>
+			<tr>
+			<tr>
+				<td>
+					<span class="date" style="background: #fff;">
+						<input type="text" id="typeC" name="typeC" defaultDate="today" showWeek="Y" selectWeek="Y" dateType="W" readonly/>										
+					</span>
+				</td>
+			<tr>
+		</table>
+	</section>
+</div>

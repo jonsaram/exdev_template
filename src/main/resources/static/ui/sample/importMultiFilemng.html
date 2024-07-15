@@ -1,0 +1,118 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function(parm) {
+		var parm = {
+			 GRP_FILE_ID 	: "ABCDE111"
+			,OWNER_CD 		: "BOARD"
+			,mode			: "M"
+			,allowExt		: ["jpg", "jpeg", "png", "gif", "bmp"]
+		}
+		C_COMP.import("importMultiFilemng", "component_compMultiFilemng", parm , function() {
+			
+			
+			
+		});
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+<div class="cont_wrap">
+	<div class="cont_top">
+		<h2><a href="company_board.html" class="before"><i class="icon_long_arrow_left"></i>공지사항</a></h2>
+	</div>
+	<div class="sec_scroll resize">
+		<section class="sec_wrap list pt0">
+			<div class="tbl01 row board">
+				<table>
+					<caption>표 캡션</caption>
+					<colgroup>
+						<col />
+					</colgroup>
+					<tbody>
+						<tr>
+							<td>
+								<h3>사내 직함/직급에 대한 승격 통보</h3>
+								<dl class="board_cont">
+									<dt>작성자 :</dt>
+									<dd>이희성</dd>
+								</dl>
+								<dl class="board_cont">
+									<dt>작성일 :</dt>
+									<dd>2024-01-01 12:05:05</dd>
+								</dl>
+								<dl class="board_cont">
+									<dt>조회 :</dt>
+									<dd>112</dd>
+								</dl>
+								<dl class="board_cont">
+									<dt>댓글 :</dt>
+									<dd>11</dd>
+								</dl>
+
+							</td>
+						</tr>
+						<tr>
+							<td id=importMultiFilemng>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="lh20" style="min-height:200px;overflow:auto;">
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+									고객 컨설팅 비용 결재 부탁 드립니다.<br>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h4 class="mt5">댓글</h4>
+								<div class="comment_wrap">
+									<div class="comment">
+										<p>
+											<textarea rows="2" style="width:calc(100% - 60px)"></textarea>
+											<button class="btn ml5" style="height:58px">등록</button>
+										</p>
+									</div>
+									<div class="comment">
+										<strong>위성열</strong>
+										<span>2024-01-01 12:05:05</span>
+										<p>전 댓글이예요 전 댓글이예요 전 댓글이예요 전 댓글이예요 전 댓글이예요 전 댓글이예요 전 댓글이예요 전 댓글이예요 전 댓글이예요</p>
+										<div class="com_btnArea">
+											<button class="stateBtn">수정</button>
+											<button class="stateBtn">삭제</button>
+										</div>
+									</div>
+									<div class="comment">
+										<strong>유태원</strong>
+										<span>2024-01-01 12:05:05</span>
+										<p>저도 댓글 오키?</p>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
+</div>

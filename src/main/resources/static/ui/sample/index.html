@@ -1,0 +1,201 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+		openProjectPopup : function() {
+			C_POP.open('popup_operation_projectSearchPopup', {}, function(retData) {
+				dalert(retData);
+			});
+		 }
+		,openOneLinePopup : function() {
+			C_POP.open('popup_common_inputOnelinePopup', {title1 : "댓글수정", title2 : "댓글", msg : "abcde"}, function(retData) {
+				dalert(retData);
+			});
+		 }
+		,addAlarm : function() {
+			
+			let parm = {
+				 userId 	: 'jonsaram'
+				,content	: '결재요청이 있습니다.'
+				,directExec	: 'MOVE/MN_APR_STA'
+			}
+			
+			C_COM.addAlarm(parm, function(retData) {
+
+			});
+			
+		 }
+		,getSchedule : function() {
+			var parm = {
+				 userIdList  : ['jonsaram']
+			    ,contractId  : undefined
+				,startDate 	 : '2024-06-01'
+				,endDate 	 : '2024-06-30'
+			}
+			
+			C_CALENDAR.getScheduleList(parm, function(resultList) {
+				dalert(resultList);
+				dwrite(resultList);
+			});
+		 }
+		,makeProjectFolder : function() {
+			let BUYER_ID = G_VAL.session.BUYER_ID;
+			
+	        let parm = {
+	            queryId        : "contract.getProjectList"
+	           ,requestParm    : {} 
+	        }
+	        C_COM.requestQuery(parm, function(retData) {
+				$.each(retData.data, function() {
+					if(isEmpty(this.BASE_FOLDER_ID)) {
+						let projectInfo = this;
+						let folderId	= C_COM.makeUniqueId();
+						let folderNm	= `${projectInfo.BUYER_NM}_${projectInfo.CONSULTING_NM}`;
+						projectInfo.BASE_FOLDER_ID = folderId
+						
+						// 프로젝트 폴더 생성
+						let parm1 ={
+							 queryId 		: "contract.updateProject"
+							,requestParm	: projectInfo
+						}
+						let parm2 = {
+							 queryId 		: "faDashboard.saveFolder"
+							,requestParm	: {
+								 FOLDER_ID 		: folderId
+								,FOLDER_NM 		: folderNm
+								,BUYER_ID		: BUYER_ID
+								,UP_FOLDER_ID	: 'BASE'
+							}
+						}
+						let parm = { queryGroup : [parm1, parm2] }
+						C_COM.requestQuery(parm, function(resultData) {
+							
+						});
+					}
+				});
+	        });
+
+		 }
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function() {
+
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+<div class="cont_wrap" style="overflow-y:auto">
+	<!--section -->
+    <section>
+        <a href="javascript:C_PM.movePage('sample_summernote')">summernote_위성열</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_singleSelectBox')">Single SeletBox Sample_위성열</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:<@pageId>.makeProjectFolder()">make project folder BY 위성열</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_importFilemng')">File Manage Component BY 위성열</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:<@pageId>.changeGrpFileId()">그룹FileID 변경</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:<@pageId>.getSchedule()">스케쥴 가져오기</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_importComponentSample')">importComponentSample</a>
+	</section>	<br/>
+	<section>
+		<a href="javascript:<@pageId>.addAlarm()">add alarm</a>
+	</section>	<br/>
+	<section>
+		<a href="javascript:<@pageId>.openOneLinePopup()">popup_common_inputOnelinePopup</a>
+	</section>	<br/>
+	<section>
+		<a href="javascript:C_PM.movePage('sample_importSelectbox')">sample_importSelectbox</a>
+	</section>	<br/>
+	<section>
+		<a href="javascript:C_PM.movePage('sample_samplePage1')">sample_samplePage1</a>
+	</section>	<br/>
+	<section>
+		<a href="javascript:C_PM.movePage('sample_samplePage2')">sample_samplePage2</a>
+	</section>	<br/>
+	<section>
+		<a href="javascript:C_PM.movePage('sample_samplePage3')">Table Sample</a>
+	</section>	<br/>
+	<section>
+		<a href="javascript:C_PM.movePage('sample_samplePage4')">멀티첨부파일(입력)_이응규</a>
+	</section>	<br/>
+	<section>
+		<a href="javascript:C_PM.movePage('sample_fileList')">멀티첨부파일(목록)_이응규</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_singleSelectBox')">Single SeletBox Sample_위성열</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_multiSelectBox')">Multi SeletBox Sample_위성열</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_calendar')">Calendar_위성열</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_commonCode')">Common Code</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_importTextEditor')">Text Editor Sample</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_sessionTest')">Session Test</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_fileMngSample')">File Manage Test BY 위성열</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_importMultiFilemng')">Multi File Manage Component BY 위성열</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('main_sched_scheduleManage')">스케쥴</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_enterPerformance03')">실적관리 샘플</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_tableGrid')">table Grid</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_tabSample')">sample_tabSample</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_excelUploadToTable')">excelUploadToTable</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_pagingSample')">Paging Sample</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_searchMember')">Search User/Buyer</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_localPaging')">sample_localPaging</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('main_system_excelupload')">excelupload</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_callService')">sample_callService</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:<@pageId>.openProjectPopup()">open Project Popup</a>
+	</section>	<br/>
+    <section>
+        <a href="javascript:C_PM.movePage('sample_calendarSample')">sample_calendarSample</a>
+	</section>	<br/>
+
+	<!--
+	<section>
+        <a href="javascript:C_PM.movePage('sample_boardMain')">게시판_이응규</a>
+    </section>
+     -->
+</div>

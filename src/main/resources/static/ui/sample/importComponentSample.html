@@ -1,0 +1,37 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+		 callFromComp : function() {
+			alert('comp에서 호출됨.');
+		 }
+		,callCompFn : function() {
+			<@pageId>.importComp.testFn();
+		 }
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function() {
+		C_COMP.import("importComp", "component_dashboard_compFolderMng", {AA:11}, function(data) {
+			alert("import page");
+			dalert(data);
+		});
+		
+		C_CALENDAR.getScheduleList();
+		
+		
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+<div class="cont_wrap">
+
+	Component Sample <br/><br/>
+	
+	<comp id="importComp">
+	</comp>
+
+	<br/><br/><br/>
+	<input type=button value="compt function 호출" onclick="<@pageId>.callCompFn()"/>
+
+</div>

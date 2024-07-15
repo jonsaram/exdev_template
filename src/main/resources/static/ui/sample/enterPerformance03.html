@@ -1,0 +1,264 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function() {
+
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+	
+</script>
+<div class="cont_wrap">
+	<div class="cont_top">
+		<h2><i class="icon_bullet"></i>실적 관리</h2>
+	</div>
+
+	<section class="sec_wrap list" style="height:calc(100% - 43px);">
+		<!-- search area -->
+		<div class="search_area mt0">
+			<div class="fl">
+				<span class="tit01 fl lh33">계약 정보</span>
+				<a href="#modal-ex02" class="btn fl">계약 선택</a>
+			</div>
+		</div>
+		<div class="tbl01 row">
+			<table>
+				<caption>표 캡션</caption>
+				<colgroup>
+					<col style="width:100px;">
+					<col>
+					<col style="width:100px;">
+					<col>
+				</colgroup>
+				<tbody>
+					<tr>
+						<th scope="row">고객 ID</th>
+						<td>BUYER_ID_2</td>
+						<th scope="row">고객명</th>
+						<td>산와 대부 주식회사</td>
+					</tr>
+					<tr>
+						<th scope="row">담당자</th>
+						<td>위성열 (jonsaram)</td>
+						<th scope="row">총계약금액</th>
+						<td>2,000,000원</td>
+					</tr>
+					<tr>
+						<th scope="row">상담일</th>
+						<td>2024-02-01</td>
+						<th scope="row">자문계약일</th>
+						<td>2024-03-01</td>
+					</tr>
+					<tr>
+						<th scope="row">만료일</th>
+						<td>2025-03-01</td>
+						<th scope="row">계약 유형</th>
+						<td>1회성 계약</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- search area -->
+		<div class="search_area mt25">
+			<div class="fl">
+				<span class="tit01 fl lh33">실적 리스트</span>
+				<a href="#modal-ex03" class="btn fl">실적 등록</a>
+			</div>
+		</div>
+		<!-- 테이블 -->
+		<div class="tbl01 col tbl_scroll row2" style="height:calc(100% - 330px);">
+			<div class="tbl01 col tbl_head">
+				<table>
+					<caption>실적 리스트</caption>
+					<colgroup>
+						<col style="width:40px;"/>
+						<col style="width:140px;"/>
+						<col style="width:110px;" span="5" />
+						<col style="width:90px;" span="7" />
+						<col style="width:40px;"/>
+						<col style="width:40px;"/>
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col" rowspan="2">순번</th>
+							<th scope="col" rowspan="2">총계약금액</th>
+							<th scope="col" rowspan="2">입금일</th>
+							<th scope="col" rowspan="2">입금액</th>
+							<th scope="col" rowspan="2">잔금</th>
+							<th scope="col" rowspan="2">비용</th>
+							<th scope="col" rowspan="2">순매출</th>
+							<th scope="col" colspan="7">수수료 산출 내역</th>
+							<th scope="col" rowspan="2"><i class="icon_pen"></i></th>
+							<th scope="col" rowspan="2"><i class="icon_trash"></i></th>
+						</tr>
+						<tr>
+							<th scope="col">사원ID</th>
+							<th scope="col">사원이름</th>
+							<th scope="col">등급/직위</th>
+							<th scope="col">역할</th>
+							<th scope="col">수수료율</th>
+							<th scope="col">수수료</th>
+							<th scope="col">순이익</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div class="tbl01 col tbl_body_scroll">
+				<table>
+					<caption>실적 리스트</caption>
+					<colgroup>
+						<col style="width:40px;"/>
+						<col style="width:140px;"/>
+						<col style="width:110px;" span="5" />
+						<col style="width:90px;" span="7" />
+						<col style="width:40px;"/>
+						<col style="width:40px;"/>
+					</colgroup>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td class="tr">10,000,000</td>
+							<td>2014-02-05</td>
+							<td class="tr">2,000,000</td>
+							<td class="tr">8,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td>jonsaram</td>
+							<td>위성열</td>
+							<td>마스터</td>
+							<td>담당자</td>
+							<td>25%</td>
+							<td class="tr">250,000</td>
+							<td class="tr">240,000</td>
+							<td><button><i class="icon_pen"></i></button></td>
+							<td><button><i class="icon_trash"></i></button></td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td class="tr">10,000,000</td>
+							<td>2014-02-05</td>
+							<td class="tr">2,000,000</td>
+							<td class="tr">8,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td colspan="4">계</td>
+							<td>25%</td>
+							<td class="tr">250,000</td>
+							<td class="tr">240,000</td>
+							<td><button><i class="icon_pen"></i></button></td>
+							<td><button><i class="icon_trash"></i></button></td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td class="tr">10,000,000</td>
+							<td>2014-02-05</td>
+							<td class="tr">2,000,000</td>
+							<td class="tr">8,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td colspan="4">계</td>
+							<td>25%</td>
+							<td class="tr">250,000</td>
+							<td class="tr">240,000</td>
+							<td><button><i class="icon_pen"></i></button></td>
+							<td><button><i class="icon_trash"></i></button></td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td class="tr">10,000,000</td>
+							<td>2014-02-05</td>
+							<td class="tr">2,000,000</td>
+							<td class="tr">8,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td colspan="4">계</td>
+							<td>25%</td>
+							<td class="tr">250,000</td>
+							<td class="tr">240,000</td>
+							<td><button><i class="icon_pen"></i></button></td>
+							<td><button><i class="icon_trash"></i></button></td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td class="tr">10,000,000</td>
+							<td>2014-02-05</td>
+							<td class="tr">2,000,000</td>
+							<td class="tr">8,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td colspan="4">계</td>
+							<td>25%</td>
+							<td class="tr">250,000</td>
+							<td class="tr">240,000</td>
+							<td><button><i class="icon_pen"></i></button></td>
+							<td><button><i class="icon_trash"></i></button></td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td class="tr">10,000,000</td>
+							<td>2014-02-05</td>
+							<td class="tr">2,000,000</td>
+							<td class="tr">8,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td colspan="4">계</td>
+							<td>25%</td>
+							<td class="tr">250,000</td>
+							<td class="tr">240,000</td>
+							<td><button><i class="icon_pen"></i></button></td>
+							<td><button><i class="icon_trash"></i></button></td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td class="tr">10,000,000</td>
+							<td>2014-02-05</td>
+							<td class="tr">2,000,000</td>
+							<td class="tr">8,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td colspan="4">계</td>
+							<td>25%</td>
+							<td class="tr">250,000</td>
+							<td class="tr">240,000</td>
+							<td><button><i class="icon_pen"></i></button></td>
+							<td><button><i class="icon_trash"></i></button></td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td class="tr">10,000,000</td>
+							<td>2014-02-05</td>
+							<td class="tr">2,000,000</td>
+							<td class="tr">8,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td class="tr">1,000,000</td>
+							<td colspan="4">계</td>
+							<td>25%</td>
+							<td class="tr">250,000</td>
+							<td class="tr">240,000</td>
+							<td><button><i class="icon_pen"></i></button></td>
+							<td><button><i class="icon_trash"></i></button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- paging -->
+		<div class="paging">
+			<a href="#none" class="btn_pg_first disabled">첫번째 페이지</a>
+			<a href="#none" class="btn_pg_prev disabled">이전 페이지</a>
+			<strong title="현재 페이지">1</strong>
+			<a href="#none">2</a>
+			<a href="#none">3</a>
+			<a href="#none">4</a>
+			<a href="#none">5</a>
+			<a href="#none" class="btn_pg_next">다음 페이지</a>
+			<a href="#none" class="btn_pg_last">마지막 페이지</a>
+		</div>
+	</section>
+</div>

@@ -1,0 +1,226 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+	         fileList : [] 
+	        ,searchFile : () => {
+	        	     
+	        	    let grpId = $("#<@pageId>grpId").val();
+	        	    let parm = {
+	                     queryId        : "Sample.getFile"
+	                    ,requestParm    : {grpId: grpId}
+	                }
+	                C_COM.requestQuery(parm, function(resultData) {
+	                	console.log( resultData.data);
+	                    <@pageId>.fileList = resultData.data;
+	                    let rparm = {
+	                             targetId   : "tableId"
+	                            ,list       : resultData.data
+	                        }
+	                    C_COM.renderHtml("<@pageId>", rparm);
+	                    
+	                });            
+	        }  
+            ,deleteFile : () => {
+                
+            	let formData = new FormData();
+                $("input[name=fileCheck]:checked").each(function(){
+                	formData.append("delete_file_list", $(this).val());
+                })
+                
+                $.ajax({
+                    url: '/fileDelete.do',
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        const msg = response.msg;
+                        alert(msg);
+                        <@pageId>.searchFile();
+                    },
+                    error: function (xhr, desc, err) {
+                        alert('에러가 발생 하였습니다.');
+                        return;
+                    }
+                })
+
+        
+            }
+	}
+	
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function(parm) {
+	
+	        <@pageId>.searchFile();
+
+            //조회 버튼 클릭      
+            $('#<@pageId>_search').on('click', function (e) {
+            
+                <@pageId>.searchFile();
+            })
+            //삭제 버튼 클릭      
+            $('#<@pageId>_delete').on('click', function (e) {
+                console.log("_delete click");
+                <@pageId>.deleteFile();
+            })
+	        
+	});
+	    
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+	
+	});
+</script>
+
+
+<div class="cont_wrap">
+    <div class='side' id='<@pageId>_updateItems'>
+        그룹 ID :   <input type='text'   id='<@pageId>grpId' name='<@pageId>grpId' > 
+    </div>
+    <button id='<@pageId>_search'  >조회</button>
+    <button id='<@pageId>_delete'  >삭제</button>
+	<table class='tb'>
+	  <thead>
+	      <tr>
+	          <th style='width:20px;'>ck</th>
+	          <th style='width:50px;'>#번호</th>
+	          <th>UUID</th>
+	          <th style='width:150px;'>그룹 ID</th>
+	          <th style='width:150px;'>원본파일 이름</th>
+	          <th>저장된파일 이름</th>
+	          <th>파일 경로</th>
+	          <th>파일크기</th>
+	          <th>생성자</th>
+	          <th>생성일</th>
+	      </tr>
+	  </thead>
+	  <tbody id="tableId">
+	  </tbody>
+	  <script type="text/x-jsrender" id="tableId_template">  
+                {{for list}}
+                <tr id="fileId_{{:#index}}">
+                     <td><input type='checkbox' id="<@pageId>.ck_{{:#index}}" name="fileCheck" value='{{:UUID}}'></td>
+                     <td id='index'           value='{{:#index}}'         >{{:#index}}    </td>
+                     <td id='UUID'            value='{{:UUID}}'           ><span  class="tooltip">{{:UUID}}</span>{{:UUID}}</td>
+                     <td id='GRP_ID'           value='{{:GRP_ID}}'          ><span  class="tooltip">{{:GRP_ID}}</span>{{:GRP_ID}}    </td>
+                     <td id='ORG_FILE_NAME'     value='{{:ORG_FILE_NAME}}'    ><span  class="tooltip">{{:ORG_FILE_NAME}}</span>{{:ORG_FILE_NAME}}</td>
+                     <td id='STORED_FILE_NAME'  value='{{:STORED_FILE_NAME}}' ><span  class="tooltip">{{:STORED_FILE_NAME}}</span>{{:STORED_FILE_NAME}}</td>
+                     <td id='FILE_PATH'        value='{{:FILE_PATH}}'       ><span  class="tooltip">{{:FILE_PATH}}</span>{{:FILE_PATH}}    </td>
+                     <td id='FILE_SIZE'        value='{{:FILE_SIZE}}'       ><span  class="tooltip">{{:FILE_SIZE}}</span>{{:FILE_SIZE}}    </td>
+                     <td id='CREATE_USER'      value='{{:CREATE_USER}}'     ><span  class="tooltip">{{:CREATE_USER}}</span>{{:CREATE_USER}}</td>
+                     <td id='CREATE_DATE'      value='{{:CREATE_DATE}}'     ><span  class="tooltip">{{:CREATE_DATE}}</span>{{:CREATE_DATE}}</td>
+                </tr>
+                {{/for}}
+             </script>
+	  <script type="text/x-jsrender" id="tableId_noData_template">    
+                <tr>    
+                    <td colspan=10>자료가 없습니다.</td>    
+                </tr>
+             </script>
+	</table>
+</div>
+
+<style>
+    .side {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+    }
+
+    button {
+        margin-top: 10px;
+        background-color: #555; 
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-left: 5px;
+    }
+
+    button:hover {
+        background-color: #333; /* 더 어두운 회색 계열 */
+    }
+
+    .tb {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .tb th, .tb td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .tb th {
+        background-color: #f2f2f2;
+    }
+
+    .tb tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    .side input,
+    .side select,
+    .side button {
+        margin: 5px;
+        padding: 8px;
+    }
+
+    .side select {
+        width: 150px;
+    }
+
+    .side button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .side button:hover {
+        background-color: #45a049;
+    }
+
+    .tb tr td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        position: relative;
+    }
+    
+    .tb tr td:hover {
+        overflow: visible;
+    }
+
+    .tb tr td span.tooltip {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        padding: 5px;
+        z-index: 100000;
+        bottom: 30%;
+        left: 0;
+        width: max-content;
+        
+    }
+
+    .tb tr td:hover .tooltip {
+        display: block;
+        overflow: visible;
+    }
+</style>

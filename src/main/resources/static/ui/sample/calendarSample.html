@@ -1,0 +1,53 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+			calendar : ''
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function() {
+		
+        var calendarEl = document.getElementById('<@pageId>_calendar');            
+        
+        <@pageId>.calendar = new FullCalendar.Calendar(calendarEl, {
+			initialView: 'dayGridMonth',
+			height: '100%',
+			expandRows: true,
+			locale: 'ko', // 한국어 설정
+			// slotMinTime: '08:00',
+			// slotMaxTime: '20:00',
+			headerToolbar: {
+			    // left: 'prev,next today',
+			    left: '',
+			    center: 'title',
+			    right: 'timeGridDay,timeGridWeek,dayGridMonth,prev,next'
+			    // right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+			}
+        });
+        <@pageId>.calendar.render();
+        
+        $("#<@pageId> .fc-button-group button").bind("click", function() {
+        	alert($(this).attr("title"));
+        });
+        
+        
+/*        
+        setTimeout(function() {
+        	var obj = {"id":"18f058b2e941479e","title":"워크샵","start":"2024-04-27T00:00:00","end":"2024-04-27T23:30:00","color":"#8dcc76","extendedProps":{"shareYn":"N"}}
+        	<@pageId>.calendar.addEvent(obj);
+        	debugger;
+        	let cd = <@pageId>.calendar.getCurrentData();
+        	dalert(cd.dateProfile.currentRange);
+        	
+        }, 100)
+*/       
+        
+        
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+<div class="cont_wrap">
+	<div id='<@pageId>_calendar'></div>
+</div>

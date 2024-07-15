@@ -1,0 +1,91 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+
+	var <@pageId> = {
+			
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function(parm) {
+		var dataList = [
+			 { 
+				 ITEM1 : "1ROW 1COL"
+				,ITEM2 : "1ROW 2COL"
+				,ITEM3 : "1ROW 3COL"
+				,ITEM4 : "1ROW 4COL"
+			 }
+			,{
+				 ITEM1 : "1ROW 1COL"
+				,ITEM2 : "1ROW 2COL"
+				,ITEM3 : "1ROW 3COL"
+				,ITEM4 : "2ROW 4COL"
+			 }
+			,{
+				 ITEM1 : "1ROW 1COL"
+				,ITEM2 : "3ROW 2COL"
+				,ITEM3 : "3ROW 3COL"
+				,ITEM4 : "3ROW 4COL"
+			 }
+			,{
+				 ITEM1 : "4ROW 1COL"
+				,ITEM2 : "4ROW 2COL"
+				,ITEM3 : "4ROW 3COL"
+				,ITEM4 : "4ROW 4COL"
+			 }
+			,{
+				 ITEM1 : "5ROW 1COL"
+				,ITEM2 : "5ROW 2COL"
+				,ITEM3 : "5ROW 3COL"
+				,ITEM4 : "5ROW 4COL"
+			 }
+		];
+			
+		var rparm = {
+			 targetId 		: "tableId"
+			,list			: dataList
+		}
+		C_COM.renderHtml("<@pageId>", rparm);
+
+		mergeTableTD('tableId', {startIdx : 2, endIdx : 4, startRowIdx : 2});
+
+		//mergeTableTD('tableId', {startIdx : 2, endIdx : 2, startRowIdx : 1});
+
+
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+<div class="cont_wrap">
+	Table Grid<br/>
+	
+	<table border=1>
+		<thead>
+			<tr>	
+				<th>Num</th>	
+				<th>ITEM1</th>	
+				<th>ITEM2</th>	
+				<th>ITEM3</th>	
+				<th>ITEM4</th>	
+			</tr> 
+		</thead>
+		<tbody id="tableId">
+		</tbody>
+		<script type="text/x-jsrender" id="tableId_template">	
+			{{for list}}
+			<tr>	
+				<td>{{:#index + 1}}</td>	
+				<td>{{:ITEM1}}</td>	
+				<td>{{:ITEM2}}</td>	
+				<td>{{:ITEM3}}</td>	
+				<td>{{:ITEM4}}</td>	
+			</tr>
+			{{/for}}
+		</script>
+		<script type="text/x-jsrender" id="tableId_noData_template">	
+			<tr>	
+				<td colspan=5>자료가 없습니다.</td>	
+			</tr>
+		</script>
+	</table>
+</div>

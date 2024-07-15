@@ -1,0 +1,117 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+		setSearchParm : function() {
+			return {AAA : "CCC"}
+		}
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function() {
+/*		
+		var parm = {
+			 queryId 		: "Sample.getSample"
+			,requestParm	: {parm : "XXX"}
+		}
+		C_COM.requestQuery(parm, function(resultData) {
+            let rparm = {
+                 targetId   : "sampleList"
+                ,list       : resultData.data
+            }
+            C_COM.renderHtml("<@pageId>", rparm);
+		});
+*/		
+
+	// 페이징 처리 초기화
+		C_PAGING.create({
+ 			 pageId				: "<@pageId>"
+ 			,listDomId			: "<@pageId>_sampleList"
+ 			,pagingDomId		: "pageDiv"
+ 			,totalCntDomId		: "totalCnt"
+ 			,queryId			: "Sample.getSampleList"
+			,listRange			: 3
+			,pageRange			: 3
+			// <@pageId>.setSearchParm function에서 반환하는 json object값을 Query Parameter로 사용한다.
+ 			,parmFn				: function() {
+ 				let parm = { AAA : "BBB"}
+ 				return 	parm;
+ 			 }
+			// 페이지를 클릭 했을때 처리가 필요하면 아래에 정의 함
+			,onPageClickCallback: function(data) {
+
+			 }
+			// 검색해온 List를 수정한다.
+			,makeListFn			: function(list) {
+				
+			 }
+ 		});
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+<div class="cont_wrap">
+	<div class="cont_top">
+		<h2><i class="icon_bullet"></i>Sample 리스트</h2>
+	</div>
+
+	<section class="sec_wrap list" style="height:calc(100% - 43px);">
+		<!-- search area -->
+		<div class="search_area mt0">
+            <div class="search_right">
+				<strong class="total">Total: <span class="pointColr" id="totalCnt"></span></strong>
+            </div>
+		</div>
+		<!-- 테이블 -->
+		<div class="tbl01 col tbl_scroll" style="max-height:506px;">
+			<div class="tbl01 col tbl_head">
+				<table>
+					<caption>Sample 리스트</caption>
+					<colgroup>
+						<col style="width:70px;"/>
+						<col style="width:300px;"/>
+						<col style="width:*;"/>
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">Num</th>
+							<th scope="col">AAA</th>
+							<th scope="col">BBB</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div class="tbl01 col tbl_body_scroll">
+				<table>
+					<caption>Sample List</caption>
+					<colgroup>
+						<col style="width:70px;"/>
+						<col style="width:300px;"/>
+						<col style="width:*;"/>
+					</colgroup>
+					<tbody id="<@pageId>_sampleList">
+					</tbody>
+					<script type="text/x-jsrender" id="<@pageId>_sampleList_template">	
+						{{for list}}
+						<tr>
+							<td>{{:ROWIDX}}</td>
+							<td>{{:AAA}}</td>
+							<td>{{:BBB}}</td>
+						</tr>
+						{{/for}}
+					</script>
+					<script type="text/x-jsrender" id="<@pageId>_sampleList_noData_template">	
+						<tr>
+							<td colspan=3 class="tc">자료가 없습니다.</td>
+						</tr>
+					</script>
+					
+				</table>
+			</div>
+		</div>
+		<!-- paging -->
+		<div class="paging" id="pageDiv">
+		</div>
+	</section>
+
+</div>

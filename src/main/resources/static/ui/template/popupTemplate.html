@@ -1,0 +1,30 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@popupId> = {
+		 close : function(returnData) {
+			if(isEmpty(returnData)) returnData = {};
+			C_POP.close(returnData);
+		 }
+	}
+	// Popup Load가 완료된후 실행 된다.
+	C_POP.onLoadPopup("<@popupId>", function(data) {
+		
+	});
+</script>
+<div class="modal_wrap">
+	<div class="modal" style="width:570px;height:350px;">
+		<div class="modal_header">
+			<strong class="tit">팝업 제목</strong>
+			<button type="button" class="btn_close"><span class="sp" onclick="<@popupId>.close()">팝업 닫기</span></button>
+		</div>
+		<div class="modal_body">
+			<p>
+				popup 내용
+			</p>
+		</div>
+		<div class="modal_footer">
+			<button type="button" class="btn select">확인</button>
+			<button type="button" class="btn close" onclick="<@popupId>.close()">닫기</button>
+		</div>
+	</div>
+</div>

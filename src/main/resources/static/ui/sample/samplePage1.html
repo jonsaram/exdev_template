@@ -1,0 +1,231 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+		callService : function() {
+			var parm = {
+				 serviceId 				: "ExdevSampleService.getSample"
+				,requestParm			: {parm : "XXX"}
+			}
+			
+			C_COM.requestService(parm, function(resultData) {
+				dalert(resultData);
+			});
+		 }
+		,callQuery : function() {
+			var parm = {
+				 queryId 		: "Sample.getSample"
+				,requestParm	: {parm : "XXX"}
+			}
+			C_COM.requestQuery(parm, function(resultData) {
+				if(resultData.state == "S") {
+					dalert(resultData);
+				} else if(resultData.state == "E") {
+					dalert(resultData);
+				}					
+			});
+		 }
+		,updateQuery : function() {
+			var parm = {
+				 queryId 			: "Sample.updateSample"
+				,requestParm		: {T_CLM : "YYY"}
+				,requestParmList	: [{T_CLM : "XXX"}]
+			}
+			C_COM.requestQuery(parm, function(resultData) {
+				dalert(resultData);
+			});
+		 }
+		,updateQueryGroup : function() {
+			var parm = {
+				queryGroup : [
+					{
+						 queryId 			: "Sample.updateSample"
+						,requestParmList	: [{parm : "XXX"}]
+					}
+					,
+					{
+						 queryId 			: "Sample.updateSample"
+						,requestParmList	: [{parm : "XXX"}]
+					}
+				]
+			}
+			C_COM.requestQuery(parm, function(resultData) {
+				dalert(resultData);
+			});
+		 }
+		,makeUniqueId : function() {
+			var id = C_COM.makeUniqueId();
+			alert(id);
+		 }
+		
+		,openPopup : function() {
+			C_POP.open('popup_samplePopup', {}, function(retData) {
+				dalert(retData);
+			});
+		 }
+		,getNumber : function() {
+			var num = $("#<@pageId> #numberSample").nval();
+			alert(num);
+		 }
+		
+		,insertPayment : function() {
+			var parm = {
+					 queryId 		: "result.insertPaymentItem"
+					,requestParm	: {CONTRACT_ID : '18daf5aa160150f1' , RESULT_ID: 'RESULT_1_ID'}
+				}
+				C_COM.requestQuery(parm, function(resultData) {
+					dalert(resultData);
+				});
+		 }
+		
+		,getPayId : function() {
+			
+			const USERS = [
+				{CONTRACT_ID:'18daf5aa160150f1',USER_ID: '99933532664' , EXEC_TYPE:'EXEC',RELATION_TYPE:''},
+				{CONTRACT_ID:'18daf5aa160150f1',USER_ID: '99909833166' , EXEC_TYPE:'SALES',RELATION_TYPE:'COWORK'},
+				{CONTRACT_ID:'18daf5aa160150f1',USER_ID: '5754852770' , EXEC_TYPE:'SALES',RELATION_TYPE:'COWORK'},
+				{CONTRACT_ID:'18daf5aa160150f1',USER_ID: 'trigger8kr' , EXEC_TYPE:'SALES',RELATION_TYPE:'SALES'},
+				{CONTRACT_ID:'18daf5aa160150f1',USER_ID: 'trigger9kr' , EXEC_TYPE:'SALES',RELATION_TYPE:'SALES'},
+				{CONTRACT_ID:'18daf5aa160150f1',USER_ID: '123456789' , EXEC_TYPE:'SALES',RELATION_TYPE:'OVERRIDING'},
+				{CONTRACT_ID:'18daf5aa160150f1',USER_ID: 'trigger7kr' , EXEC_TYPE:'SALES',RELATION_TYPE:'OVERRIDING'},
+				{CONTRACT_ID:'18daf5aa160150f1',USER_ID: 'trigger10kr' , EXEC_TYPE:'SALES',RELATION_TYPE:'OVERRIDING'},
+			]
+			USERS.forEach( user => {
+				debugger;
+				var parm ={
+								 queryId 		: "result.getPayId"
+								,requestParm	: {CONTRACT_ID:user.CONTRACT_ID,USER_ID:user.USER_ID , EXEC_TYPE:user.EXEC_TYPE,RELATION_TYPE:user.RELATION_TYPE}
+							}
+					C_COM.requestQuery(parm, function(resultData) {
+						console.log( resultData );
+					});
+			})
+			
+		 } 	 
+		,arrToObj : function() {
+				let arrList = 
+					[	{key: 'RN', val: '3'}
+					,	{key: 'TOTAL_COST', val: '3000000'}
+					,	{key: 'RESULT_DATE', val: '2024-02-22'}
+					,	{key: 'INCOME', val: '100000'}
+					,	{key: 'REMAINING_SUM', val: ''}
+					,	{key: 'COST_PRICE', val: '3'}
+					,	{key: 'ORG_SELLING_PRICE', val: '3'}
+					,	{key: 'USER_ID', val: '99933532664'}
+					,	{key: 'USER_NM', val: '유진스'}
+					,	{key: 'GRADE_NM', val: 'S마스터'}
+					,	{key: 'RELATION_TYPE_NM', val: '실행'}
+					,	{key: 'RATE', val: '50'}
+					,	{key: 'PAYMENT', val: '50000'}
+					,	{key: 'REAL_PROFIT', val: '-49997'}
+					,	{key: 'CONTRACT_ID', val: '18daf5aa160150f1'}
+					,	{key: 'RELATION_TYPE', val: 'EXECUTE'}
+					,	{key: 'RESULT_ID', val: '18dd0966b3b3b953'}
+					,	{key: 'ROLE', val: 'PRIME_MANAGER'}
+					]
+			;
+			
+			const param = arrList.reduce((acc, obj) => {
+			    acc[obj.key] = obj.val;
+			    return acc;
+			}, {});// 처음에 빈오브젝트에서 시작 ==> 배열을 돌면서 그 오브젝트에 다른 항목들을 추가한다. 
+			
+			alert( JSON.stringify(param) )
+	}	 
+	,toDay : function() {
+			let resultDate				= dayjs().format("YYYY-MM-DD");
+			
+			alert( resultDate);
+	}
+	,treemap : function() {
+		Highcharts.chart('container', {
+		    colorAxis: {
+		        minColor: '#FFFFFF',
+		        maxColor: Highcharts.getOptions().colors[0]
+		    },
+		    series: [{
+		        type: 'treemap',
+		        layoutAlgorithm: 'squarified',
+		        clip: false,
+		        data: [{
+		            name: 'A',
+		            value: 6,
+		            colorValue: 1
+		        }, {
+		            name: 'B',
+		            value: 6,
+		            colorValue: 2
+		        }, {
+		            name: 'C',
+		            value: 4,
+		            colorValue: 3
+		        }, {
+		            name: 'D',
+		            value: 3,
+		            colorValue: 4
+		        }, {
+		            name: 'E',
+		            value: 2,
+		            colorValue: 5
+		        }, {
+		            name: 'F',
+		            value: 2,
+		            colorValue: 6
+		        }, {
+		            name: 'G',
+		            value: 1,
+		            colorValue: 7
+		        }]
+		    }],
+		    title: {
+		        text: 'Highcharts Treemap'
+		    }
+		});
+	}
+		
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function() {
+
+		dalert(C_COM.getCodeMap("TEAM_USER_ROLE"));
+
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+<div class="cont_wrap">
+	
+	<br/><br/> <a class="a_search" href="javascript:<@pageId>.callService()">call service</a>
+	
+	<br/><br/> <a class="a_search" href="javascript:<@pageId>.callQuery()">call query</a>
+
+	<br/><br/> <a class="a_search" href="javascript:<@pageId>.updateQuery()">update query</a>
+
+	<br/><br/> <a class="a_search" href="javascript:<@pageId>.updateQueryGroup()">update query Group</a>
+
+	<br/><br/> <a class="a_search" href="javascript:<@pageId>.makeUniqueId()">make Unique Id</a>
+
+	<br/><br/> <a href="javascript:C_PM.movePage('sample_highchart')">chart sample</a>
+	
+	
+	<br/><br/> <a href="javascript:<@pageId>.openPopup()">open popup</a>
+	
+	<br/><br/> 숫자 Input 사용방법 소숫점 2째짜리까지 <input id="numberSample" fix="2" number/> <input type=button value="숫자읽기" onclick="<@pageId>.getNumber()"/>
+	
+	<br/><br/> <a href="javascript:<@pageId>.insertPayment()">insertPayment</a>
+	<br/><br/> <a href="javascript:<@pageId>.getPayId()">getPayId</a>
+	<br/><br/> <a href="javascript:<@pageId>.arrToObj()">arrToObj</a>
+	<br/><br/> <a href="javascript:<@pageId>.toDay()">toDay</a>
+	<br/><br/> <a href="javascript:<@pageId>.treemap()">treemap-coloraxis</a>
+
+	<figure class="highcharts-figure">
+	    <div id="container"></div>
+	    <p class="highcharts-description">
+	        Tree maps are great tools for comparing values that are part
+	        of a whole, or for showing hierarchical data. This example
+	        is a simple tree map with no hierarchy, showing the value
+	        differences with rectangle sizes and using a color axis.
+	    </p>
+	</figure>
+</div>

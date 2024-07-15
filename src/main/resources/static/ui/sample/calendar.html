@@ -1,0 +1,35 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	var <@pageId> = {
+		popup : function() {
+			C_POP.open('sample_popup_calendarPopup', {}, function(retData) {
+				dalert(retData);
+			});
+		}
+
+	}
+	// Page Load가 완료된후 실행 된다.
+	C_PM.onLoadPage("<@pageId>", function() {
+
+	});
+	// History back으로 이동해왔을 경우 이루틴이 실행된다.
+	C_HM.onReturn("<@pageId>", function(pageId, data) {
+
+	});
+</script>
+<div class="cont_wrap">
+	Page 달력
+	<div class="calendar_wrap">
+		<input type="text" class="datepicker" style="width:132px">
+	</div>
+	<div class="calendar_wrap">
+		<input type="text" class="datepicker" style="width:132px">
+	</div>
+	<div class="calendar_wrap">
+		<input type="text" class="datepicker" style="width:132px">
+	</div>
+
+
+	<input type=button value="popup" onclick="<@pageId>.popup()"/>
+	
+</div>
